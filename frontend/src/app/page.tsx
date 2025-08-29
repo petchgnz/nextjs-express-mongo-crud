@@ -76,7 +76,7 @@ export default function Home() {
   });
 
   return (
-    <div className='min-h-screen bg-gradient-to-br from-cyan-100 to-purple-200 p-6 flex items-center justify-center'>
+    <div className='min-h-screen bg-gradient-to-br from-cyan-100 to-purple-200 p-6 flex items-center justify-center flex-col'>
       <main className='w-full max-w-xl bg-white rounded-xl shadow-2xl p-8'>
         <div className='text-center mb-8'>
           <h1 className='text-3xl font-bold bg-gradient-to-r from-cyan-600 to-purple-600 bg-clip-text text-transparent mb-2'>
@@ -243,6 +243,10 @@ export default function Home() {
           })}
         </section>
       </main>
+
+      <footer className='absolute flex text-gray-400 bottom-10'>
+        <h3>© 2025 Phummarin Rojanamarn</h3>
+      </footer>
     </div>
   );
 }

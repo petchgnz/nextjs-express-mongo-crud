@@ -36,8 +36,13 @@ export default function Home() {
   // Mutation: Add
   const createMutation = useMutation({
     mutationFn: (title: string) => addItem(title),
-    onSuccess: (created) => {
-      qc.setQueryData<Item[]>(qk.items, (old = []) => [created, ...old]);
+    onSuccess: (createdItems) => {
+      // เปลี่ยนชื่อเป็น createdItems เพื่อให้ชัดเจนว่าเป็นอาร์เรย์
+      const created = createdItems[0]; // ดึง Item ตัวแรกออกมา
+      qc.setQueryData<Item[]>(qk.items, (oldItems) => {
+        const currentItems = oldItems || [];
+        return [created, ...currentItems];
+      });
       setTitle('');
     },
   });
@@ -45,10 +50,13 @@ export default function Home() {
   const renameMutation = useMutation({
     mutationFn: ({ id, title }: { id: string; title: string }) =>
       updateItem(id, { title }),
-    onSuccess: (updated) => {
-      qc.setQueryData<Item[]>(qk.items, (old = []) =>
-        old.map((i) => (i._id === updated._id ? updated : i)),
-      );
+    onSuccess: (updatedItems) => {
+      // เปลี่ยนชื่อเป็น updatedItems เพื่อให้ชัดเจนว่าเป็นอาร์เรย์
+      const updated = updatedItems[0]; // ดึง Item ตัวแรกออกมา
+      qc.setQueryData<Item[]>(qk.items, (oldItems) => {
+        const currentItems = oldItems || [];
+        return currentItems.map((i) => (i._id === updated._id ? updated : i));
+      });
       setEditingId(null);
       setEditingTitle('');
     },
@@ -58,10 +66,12 @@ export default function Home() {
   const toggleMutation = useMutation({
     mutationFn: ({ id, done }: { id: string; done: boolean }) =>
       toggleItem(id, done),
-    onSuccess: (updated) => {
-      qc.setQueryData<Item[]>(qk.items, (old = []) =>
-        old.map((i) => (i._id === updated._id ? updated : i)),
-      );
+    onSuccess: (updatedItems) => { // เปลี่ยนชื่อเป็น updatedItems
+      const updated = updatedItems[0]; // ดึง Item ตัวแรกออกมา
+      qc.setQueryData<Item[]>(qk.items, (oldItems) => {
+        const currentItems = oldItems || [];
+        return currentItems.map((i) => (i._id === updated._id ? updated : i));
+      });
     },
   });
 

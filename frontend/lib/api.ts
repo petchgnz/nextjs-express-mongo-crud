@@ -24,9 +24,13 @@ export async function addItem(title: string): Promise<Item[]> {
   return res.data
 }
 
-export async function toggleItem(id: string, done: boolean): Promise<Item[]> {
-  const res = await api.patch(`/api/items/${id}`, { done })
+export async function updateItem(id: string, patch: Partial<Pick<Item, 'title' | 'done'>>): Promise<Item[]> {
+  const res = await api.patch(`/api/items/${id}`, patch)
   return res.data
+}
+
+export async function toggleItem(id: string, done: boolean): Promise<Item[]> {
+  return updateItem(id, { done })
 }
 
 export async function deleteItem(id: string): Promise<Item[]> {

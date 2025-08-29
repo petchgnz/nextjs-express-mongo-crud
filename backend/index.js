@@ -8,7 +8,8 @@ const app = express()
 
 // allown frontend (localhost:3000) to call this API
 app.use(cors({
-  origin: process.env.CORS_ORIGIN ?? 'http://localhost:3000'
+  // origin: process.env.CORS_ORIGIN ?? 'http://localhost:3000'
+  origin: "*"
 }))
 app.use(express.json())
 
